@@ -256,9 +256,10 @@ var addRoute = function(custom_routes, callback)
 {
 
       custom_routes.routes.push({
-              "route": '/search/:term',
+              "route": '/api/search/:term',
               "method": "get",
               "options": function(req, res, callback) {
+                console.log('overrode search');
                       actualSearchToHookIn (req,res,callback);
               }
       });
@@ -314,12 +315,12 @@ var actualSearchToHookIn =  function (req, res, next)
           //var esplugin = require ('nodebb-plugin-elasticsearch');
           if (true)
           {
-              searchTopicIds (req.params.term, limit, function(err, tids) {
+            searchTopicIds (req.params.term, limit, function(err, tids) {
               if (err) {
                 return callback(err, null);
               }
 
-              topics.getTopicsByTids(tids, 0, function (topics) {
+              topics.getTopicsByTids(tids, 0, req.session.uid, function (err, topics) {
                 callback(null, topics);
               }, 0);
             });

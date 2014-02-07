@@ -9,6 +9,8 @@
         "style.css"
     ],
     "hooks": [
+        { "hook": "action:plugin.activate", "method": "pluginActivated" },
+        { "hook": "filter:server.create_routes", "method": "addRoute", "callbacked": true },
         { "hook": "action:post.save", "method": "indexPost" }
     ]
 }
